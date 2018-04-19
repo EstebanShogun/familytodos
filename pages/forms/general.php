@@ -70,8 +70,8 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"> </li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="../../index.php"><i class="fa fa-link"></i> <span>Toutes les tâches</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Créer une tâche</span></a></li>
+        <li><a href="../../index.php"><i class="fa fa-link"></i> <span>Toutes les tâches</span></a></li>
+        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Créer une tâche</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">
@@ -108,18 +108,38 @@
              
              <!-- /.box-header -->
              <div class="box-body">
-               <form role="form">
+                <?php
+                 
+                if(isset($_GET["error"])){
+                    if(($_GET["error"])=="date"){
+                        echo'<div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-ban"></i> Alerte !</h4>
+                        La date a été mal renseignée.
+                        </div>';
+                    }elseif (($_GET["error"])=="nom") {
+                        echo'<div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>                        
+                        <h4><i class="icon fa fa-ban"></i> Alerte !</h4>
+                        Mettez un nom à la tâche.
+                        </div>';
+                    }
+                     
+                        
+                }                 
+                ?>
+                 <form role="form" action="../../database/addTask.php">
                  <!-- text input -->
                  <div class="form-group">
                    <label>Nom de la tâche</label>
-                   <input type="text" class="form-control" placeholder="...">
+                   <input type="text" class="form-control" name="tache" placeholder="...">
                  </div>
 
 
                  <!-- textarea -->
                  <div class="form-group">
                    <label>Description</label>
-                   <textarea class="form-control" rows="3" placeholder="..."></textarea>
+                   <textarea class="form-control" rows="3" name="description" placeholder="..."></textarea>
                  </div>   
     
    
@@ -137,13 +157,13 @@
            
             $checkboxes .= '<div class="checkbox">
                     <label>
-                      <input type="checkbox">
+                      <input type="checkbox" name="case'.$row["user_id"].'" id="case'.$row["user_id"].'">
                       '.utf8_encode ($row["user_name"]).'
                     </label>
                   </div>';
             $radios .= '<div class="radio">
                     <label>
-                      <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                      <input type="radio" name="optionsRadios" id='.$row["user_id"].' value='.$row["user_id"].' checked>
                       '.utf8_encode ($row["user_name"]).'
                     </label>
                   </div>';            
@@ -157,19 +177,15 @@
         echo '<label>Destinataires</label>'.$checkboxes;
               
     
-    ?>
-    
-           
-                 
-                
+    ?>     
                 <div class="form-group">
                    <label>Date butoire</label>
-                   <input type="text" class="form-control" placeholder="SOUS FORME AAAA/MM/JJ">
+                   <input name="butoire" type="text" class="form-control" placeholder="SOUS FORME AAAA/MM/JJ">
                  </div>  
 
                 <!-- select -->
                 <div>
-                <button type="button" >Créer</button>
+                <input type="submit" value="Créer" />
                 </div>
               </form>
             </div>
@@ -405,7 +421,7 @@
       <!-- /.tab-pane -->
       <!-- Settings tab content -->
       <div class="tab-pane" id="control-sidebar-settings-tab">
-        <form method="post">
+        <form method="post" action="cible.php">
           <h3 class="control-sidebar-heading">General Settings</h3>
 
           <div class="form-group">

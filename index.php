@@ -149,7 +149,7 @@ desired effect
                 echo
                 '<li class="time-label">
                       <span class="bg-red">
-                        '.$row["task_end"].'
+                        '.implode('/', array_reverse(explode('-', $row["task_end"]))).'
                       </span>
                 </li>';
             }
@@ -157,7 +157,7 @@ desired effect
                   <i class="fa fa-user bg-aqua"></i>
 
                   <div class="timeline-item">
-                    <span class="time"><i class="fa fa-clock-o"></i> Créé le '.$row["task_start"].'</span>
+                    <span class="time"><i class="fa fa-clock-o"></i> Créé le '.implode('/', array_reverse(explode('-', $row["task_start"]))).'</span>
 
                     <h3 class="timeline-header"><a href="#">'.utf8_encode ($row["task_name"]).'</a> par '.utf8_encode ($row["user_name"]).'</h3>
 
